@@ -10,7 +10,8 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-    api_sup:start_link().
+    io:format("HEREEEEEEEEEEEE: ~p", [application:info()]),
+    api:start(none, none).
 
 stop(_State) ->
     ok.
