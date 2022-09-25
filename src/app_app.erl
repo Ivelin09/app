@@ -11,6 +11,7 @@
 
 start(_StartType, _StartArgs) ->
     io:format("HEREEEEEEEEEEEE: ~p", [application:info()]),
+    inets:start(),
     api:start(none, none).
 
 stop(_State) ->
