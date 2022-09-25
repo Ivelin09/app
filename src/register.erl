@@ -12,7 +12,7 @@ resource_exists(Req, State) ->
     case cowboy_req:method(Req) of 
         <<"POST">> ->
             {ok, Body, _Req} = cowboy_req:read_body(Req),
-            call:register(Username, Password, jsx:decode(Body)),
+            jsonx:decode(<<"{\"name\":\"Ivan\",\"age\":33,\"phones\":[3332211,4443322]}">>),
             {stop, cowboy_req:reply(200, Req), State};
         _ ->
             {stop, cowboy_req:reply(200, Req), State}

@@ -7,7 +7,7 @@
    [kernel,
     stdlib,
     cowboy,
-    jsx
+    jsonx
    ]},
   {env,[]},
   {modules, []},
