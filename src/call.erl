@@ -34,8 +34,8 @@ register(Username, Password, Params) ->
 
 
 make_request(Request) ->
-  {ok, Resonse} = httpc:request(post, ?REQUEST_DATA(Request), [], []),
-  Resonse.
+  {ok, Response} = httpc:request(post, ?REQUEST_DATA(Request), [], []),
+  Response.
 concat(Params) ->
  string:join([if
                 is_integer(Value) -> Rule ++ " = <int> \"" ++ integer_to_list(Value) ++ "\"";

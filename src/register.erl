@@ -12,7 +12,9 @@ resource_exists(Req, State) ->
     [Username, Password] = string:lexemes(erlang:binary_to_list(base64:decode(BasicAuth)), ":"),
     io:format("~p ~p", [Username, Password]),
     case cowboy_req:method(Req) of 
-        "POST" ->
+        <<"POST">> ->
+            io:format("A post request was made"),
+            call:register(Username, Password, jsx:decode(cowboy_req:read_body(Req))),
             {stop, cowboy_req:reply(200, Req), State};
         _ ->
             {stop, cowboy_req:reply(200, Req), State}
