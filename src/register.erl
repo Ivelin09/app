@@ -12,10 +12,12 @@ resource_exists(Req, State) ->
     case cowboy_req:method(Req) of 
         <<"POST">> ->
             {ok, Body, _Req} = cowboy_req:read_body(Req),
-            jsonx:decode(<<"{\"name\":\"Ivan\",\"age\":33,\"phones\":[3332211,4443322]}">>),
-            {stop, cowboy_req:reply(200, Req), State};
+            {_, Status_code, Resp} = call:register(Username, Password, maps:to_list(jsx:decode(Body))),
+            io:format("Register resp: ~p~n", [Resp]),
+            {stop, cowboy_req:reply(Status_code, <<Resp>>), State};
         _ ->
-            {stop, cowboy_req:reply(200, Req), State}
+            % 405 status code for METHOD NOT ALLOWED
+            {stop, cowboy_req:reply(405, Req), State}
     end.
 
 delete_resources(Req, State) ->
