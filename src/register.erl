@@ -14,7 +14,7 @@ resource_exists(Req, State) ->
             {ok, Body, _Req} = cowboy_req:read_body(Req),
             {_, Status_code, Resp} = call:register(Username, Password, maps:to_list(jsx:decode(Body))),
             io:format("Register resp: ~p~n", [Resp]),
-            {stop, cowboy_req:reply(Status_code, <<Resp>>), State};
+            {stop, cowboy_req:reply(Status_code, #{<<"Content-Type">> => <<"application/json">>}, Resp, Req), State};
         _ ->
             % 405 status code for METHOD NOT ALLOWED
             {stop, cowboy_req:reply(405, Req), State}
