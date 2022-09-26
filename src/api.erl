@@ -6,7 +6,10 @@
 
 start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile([
-        {'_', [{"/register", register, #{}}]}
+        {'_', [
+            {"/register", register, #{}},
+            {"/login", login, #{}}    
+        ]}
     ]),
     {ok, Data} = cowboy:start_clear(my_http_listener,
         [{port, 8555}],
