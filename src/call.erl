@@ -19,7 +19,7 @@
 
 login(Username, Password) ->
   Hashed_password = binary_to_list(base64:encode(crypto:hash(sha256, Password))),
-  Request = "SELECT * FROM users." ++ "\"" ++ Username ++ "\" WHERE hashed_password = \"" ++ Hashed_password ++ "\";",
+  Request = "SELECT * FROM users:" ++ Username ++ " WHERE hashed_password = \"" ++ Hashed_password ++ "\";",
   make_request(Request).
 
 
@@ -35,7 +35,6 @@ register(Username, Password, Params) ->
 
 make_request(Request) ->
   {ok, Response} = httpc:request(post, ?REQUEST_DATA(Request), [], []),
-  io:format("Respp: ~n~p~n~n~n", [Response]),
   case Response of
     {{_, Status_code, _}, _Resp_headers, Resp_body} when Status_code == 200 ->
       {ok, Status_code, Resp_body};
